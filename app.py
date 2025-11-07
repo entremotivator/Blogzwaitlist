@@ -8,13 +8,8 @@ from datetime import datetime
 # --- Page setup ---
 st.set_page_config(page_title="Blogz.life Waitlist", layout="centered")
 
-# --- Sidebar: only webhook input ---
-st.sidebar.title("n8n Webhook Setup")
-WEBHOOK_URL = st.sidebar.text_input(
-    "Enter your n8n Webhook URL",
-    placeholder="https://your-n8n-instance/webhook/waitlist",
-    help="This is where the form data will be sent."
-)
+# --- Hardcoded webhook URL ---
+WEBHOOK_URL = "https://agentonline-u29564.vm.elestio.app/webhook/8e3ca4db-9646-4bac-ac0c-3eee0c7a80a2"
 
 # --- Page Header ---
 st.title("🚀 Blogz.life Fast-Track Waitlist")
@@ -97,20 +92,18 @@ if submit:
     st.markdown("### 📦 Data Preview")
     st.json(payload)
 
-    if not WEBHOOK_URL:
-        st.warning("⚠️ Please enter your n8n Webhook URL in the sidebar to send the form.")
-    else:
-        try:
-            headers = {"Content-Type": "application/json"}
-            resp = requests.post(WEBHOOK_URL, headers=headers, json=payload, timeout=10)
-            if resp.ok:
-                st.success("✅ Form submitted successfully to n8n!")
-                try:
-                    st.json(resp.json())
-                except Exception:
-                    st.write("Response text:", resp.text[:500])
-            else:
-                st.error(f"❌ Failed to send data — status code {resp.status_code}")
-                st.text(resp.text[:500])
-        except Exception as e:
-            st.error(f"Error sending to n8n: {e}")
+    # --- Send data to webhook ---
+    try:
+        headers = {"Content-Type": "application/json"}
+        resp = requests.post(WEBHOOK_URL, headers=headers, json=payload, timeout=10)
+        if resp.ok:
+            st.success("✅ Form submitted successfully to n8n!")
+            try:
+                st.json(resp.json())
+            except Exception:
+                st.write("Response text:", resp.text[:500])
+        else:
+            st.error(f"❌ Failed to send data — status code {resp.status_code}")
+            st.text(resp.text[:500])
+    except Exception as e:
+        st.error(f"Error sending to n8n: {e}")

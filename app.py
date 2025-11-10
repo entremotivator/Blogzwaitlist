@@ -5,8 +5,29 @@ import json
 import re
 from datetime import datetime
 
-# --- Page setup ---
-st.set_page_config(page_title="Blogz.life Waitlist", layout="centered")
+# --- Page setup with hidden menu and footer ---
+st.set_page_config(
+    page_title="Blogz.life Waitlist", 
+    layout="centered",
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
+)
+
+# --- Hide Streamlit branding and menu ---
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stDeployButton {display:none;}
+    .viewerBadge_container__1QSob {display: none;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # --- Hardcoded webhook URL ---
 WEBHOOK_URL = "https://agentonline-u29564.vm.elestio.app/webhook/8e3ca4db-9646-4bac-ac0c-3eee0c7a80a2"

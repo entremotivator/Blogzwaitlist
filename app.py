@@ -30,7 +30,7 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # --- Hardcoded webhook URL ---
-WEBHOOK_URL = "https://agentonline-u29564.vm.elestio.app/webhook-test/8e3ca4db-9646-4bac-ac0c-3eee0c7a80a2"
+WEBHOOK_URL = "https://agentonline-u29564.vm.elestio.app/webhook/8e3ca4db-9646-4bac-ac0c-3eee0c7a80a2"
 
 # --- Page Header ---
 st.title("🚀 Blogz.life Fast-Track Waitlist")
